@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
+</head>
+
+<body>
+
+    <video id="webcam" autoplay playsinline width="640" height="480"></video>
+    <canvas id="canvas" class="d-none"></canvas>
+    <button id="click">CLick</button>.
+    <a id="download-photo" href="https://www.google.com/">Shaswata</a>
+
+    <button id="downloadImage"> Download Image </button>
+
+    <script>
+        const webcamElement = document.getElementById('webcam');
+        const canvasElement = document.getElementById('canvas');
+        const snapSoundElement = document.getElementById('snapSound');
+        const webcam = new Webcam(webcamElement, 'user', canvasElement, snapSoundElement);
+
+        webcam.start()
+            .then(result => {
+                console.log("webcam started");
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        click.addEventListener('click', function () {
+            console.log("hello");
+            let picture = webcam.snap();
+            document.querySelector('#download-photo').href = picture;
+            // document.getElementById("#download-photo").href = picture;
+            
+            // window.location= download-photo
+
+        
+
+        const btn = document.getElementById('downloadImage');
+const url = picture;
+
+btn.addEventListener('click', (event) => {
+  event.preventDefault();
+  console.log('ABC')
+  downloadImage(url);
+})
+
+
+function downloadImage(url) {
+  fetch(url, {
+    mode : 'no-cors',
+  })
+    .then(response => response.blob())
+    .then(blob => {
+    let blobUrl = window.URL.createObjectURL(blob);
+    let a = document.createElement('a');
+    a.download = url.replace(/^.*[\\\/]/, '');
+    a.href = blobUrl;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  })
+}
+});
+
+    </script>
+</body>
+
+</html>
